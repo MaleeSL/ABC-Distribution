@@ -16,7 +16,7 @@ export default function Navbar() {
         <nav className="flex items-center gap-6 text-xs font-mono uppercase tracking-wider">
           <Link href="/products" className="text-zinc-400 hover:text-white transition">Products</Link>
           <Link href="/inventory" className="text-zinc-400 hover:text-white transition">Inventory</Link>
-          <Link href="/orders" className="bg-white text-black px-3 py-1 rounded font-bold shadow-xs">Orders</Link>
+          <Link href="/orders" className="text-zinc-400 hover:text-white transition">Orders</Link>
           <Link href="/customers" className="text-zinc-400 hover:text-white transition">Customers</Link>
           <Link href="/dashboard" className="text-zinc-400 hover:text-white transition">Dashboard</Link>
         </nav>
