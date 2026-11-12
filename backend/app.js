@@ -21,6 +21,9 @@ app.use('/api/products', productRoutes);
 const orderRoutes = require('./src/routes/order.routes');
 app.use('/api/orders', orderRoutes);
 
+const customerRoutes = require('./src/routes/customer.routes');
+app.use('/api/customers', customerRoutes);
+
 
 app.use((req, res) => {
     res.status(404).json({ success: false, message: 'Route not found' });
