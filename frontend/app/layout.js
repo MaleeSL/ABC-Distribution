@@ -1,5 +1,5 @@
 import './globals.css';
-import Navbar from '@/Components/Navbar';
+import Sidebar from '@/Components/Sidebar';
 
 export const metadata = {
   title: 'ABC Wholesale Management System',
@@ -9,10 +9,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="bg-zinc-50/50 text-black min-h-screen">
-        <div className="min-h-screen flex flex-col">
-          <Navbar />
-          <main className="flex-1 max-w-6xl w-full mx-auto p-6 sm:py-8">
+      <body className="min-h-screen">
+        <div className="min-h-screen md:flex">
+          <Sidebar />
+          <main className="app-workspace min-w-0 flex-1 max-w-7xl w-full mx-auto p-6 pt-20 md:pt-8">
             {children}
           </main>
         </div>

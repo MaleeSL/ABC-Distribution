@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { orderService } from "@/services/orderService";
 import { productService } from "@/services/productService";
+import { customerService } from "@/services/customerService";
 import CreateOrderForm from "@/Components/CreateOrderForm";
 import OrderTable from "@/Components/OrderTable";
 
@@ -29,8 +30,7 @@ export default function OrdersPage() {
     }
 
     try {
-      const custRes = await fetch("http://localhost:5000/api/customers");
-      const custData = await custRes.json();
+      const custData = await customerService.getCustomers();
       if (custData && custData.success) {
         setCustomers(custData.data || []);
       } else {

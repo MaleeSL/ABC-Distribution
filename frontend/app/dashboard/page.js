@@ -1,6 +1,7 @@
 "use client"; 
 
 import { useEffect, useState } from 'react';
+import { dashboardService } from '@/services/dashboardService';
 
 export default function DashboardPage() {
   const [dashboardData, setDashboardData] = useState(null);
@@ -8,8 +9,7 @@ export default function DashboardPage() {
   const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/dashboard/summary')
-      .then(response => response.json())
+    dashboardService.getSummary()
       .then(result => {
         if (result.success === true) {
           setDashboardData(result.data);
@@ -28,25 +28,30 @@ export default function DashboardPage() {
   if (errorMessage) return <div>Error: {errorMessage}</div>; 
 
   return (
-    <div style={{ padding: '20px' }}>
-      <h1 style={{ fontSize: '24px', fontWeight: 'bold' }}>Dashboard Eka</h1>
-      
-      <div style={{ display: 'flex', gap: '20px', marginTop: '20px' }}>
-        <div style={{ border: '1px solid gray', padding: '15px' }}>
-          <h3>Total Orders</h3>
-          <p>{dashboardData.totalOrders}</p>
-        </div>
-        
-        <div style={{ border: '1px solid gray', padding: '15px' }}>
-          <h3>Today's Sales</h3>
-          <p>Rs. {dashboardData.todaySales}</p>
-        </div>
-        
-        <div style={{ border: '1px solid red', padding: '15px' }}>
-          <h3 style={{ color: 'red' }}>Low Stock</h3>
-          <p style={{ color: 'red', fontWeight: 'bold' }}>{dashboardData.lowStockCount}</p> {/*[cite: 7] */}
-        </div>
+    <section className="dashboard-page">
+      <div className="dashboard-heading">
+        <h1>Dashboard</h1>
+        <p>Overview of your wholesale business</p>
       </div>
-    </div>
+
+      <div className="dashboard-grid">
+        <article className="dashboard-card rounded-lg border bg-white">
+          <h2 className="dashboard-card-label">Total Orders</h2>
+          <p className="dashboard-card-value">{dashboardData.totalOrders}</p>
+        </article>
+
+        <article className="dashboard-card rounded-lg border bg-white">
+          <h2 className="dashboard-card-label">Today&apos;s Sales</h2>
+          <p className="dashboard-card-value">
+            LKR {Number(dashboardData.todaySales).toLocaleString('en-LK', { minimumFractionDigits: 2 })}
+          </p>
+        </article>
+
+        <article className="dashboard-card dashboard-card-warning rounded-lg border bg-white">
+          <h2 className="dashboard-card-label">Low Stock Items</h2>
+          <p className="dashboard-card-value">{dashboardData.lowStockCount}</p>
+        </article>
+      </div>
+    </section>
   );
 }

@@ -1,31 +1,27 @@
-const API_URL = "http://localhost:5000/api/orders";
+import { apiRequest } from './api';
 
 export const orderService = {
   createOrder: async function (orderData) {
-    const response = await fetch(API_URL, {
+    return apiRequest('orders', {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(orderData),
     });
-    return await response.json();
   },
 
   getOrders: async function () {
-    const response = await fetch(API_URL);
-    return await response.json();
+    return apiRequest('orders');
   },
 
   getOrderById: async function (id) {
-    const response = await fetch(API_URL + "/" + id);
-    return await response.json();
+    return apiRequest(`orders/${id}`);
   },
 
   updateStatus: async function (id, status) {
-    const response = await fetch(API_URL + "/" + id + "/status", {
+    return apiRequest(`orders/${id}/status`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ status: status }),
     });
-    return await response.json();
   },
 };

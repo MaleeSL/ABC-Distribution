@@ -2,6 +2,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { customerService } from '@/services/customerService';
 
 export default function CustomersPage() {
 
@@ -17,12 +18,10 @@ export default function CustomersPage() {
     // Customers load karanawa
     useEffect(() => {
         getCustomers();
-    }, []);
+    }, [search]);
 
     async function getCustomers() {
-        const response = await fetch('http://localhost:5000/api/customers');
-        const result = await response.json();
-
+        const result = await customerService.getCustomers(search);
         if (result.success) {
             setCustomers(result.data);
         }
@@ -45,23 +44,9 @@ export default function CustomersPage() {
             address
         };
 
-        let url = 'http://localhost:5000/api/customers';
-        let method = 'POST';
-
-        if (editId !== null) {
-            url = url + '/' + editId;
-            method = 'PUT';
-        }
-
-        const response = await fetch(url, {
-            method: method,
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(customerData)
-        });
-
-        const result = await response.json();
+        const result = editId !== null
+            ? await customerService.updateCustomer(editId, customerData)
+            : await customerService.createCustomer(customerData);
 
         if (result.success) {
             alert('Customer saved successfully!');
